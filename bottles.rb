@@ -1,14 +1,6 @@
 class Bottles
   def verse(number)
-    if number == 0
-      "No more bottles of beer on the wall, no more bottles of beer. Go to the store, get some more, 99 bottles of beer on the wall."
-    elsif number == 1
-      "1 bottle of beer on the wall, 1 bottle of beer. Take one down, pass it around, no more bottles of beer on the wall."
-    elsif number == 2
-      "2 bottles of beer on the wall, 2 bottles of beer. Take one down, pass it around, 1 bottle of beer on the wall."
-    else
-      "#{number} bottles of beer on the wall, #{number} bottles of beer. Take one down, pass it around, #{number - 1} bottles of beer on the wall."
-    end
+    "#{bottle_number(number).capitalize} #{bottle_noun(number)} of beer on the wall, #{bottle_number(number)} #{bottle_noun(number)} of beer. #{next_thing(number)}, #{bottle_number(next_number(number))} #{bottle_noun(next_number(number))} of beer on the wall."
   end
 
   def verses(upper, lower)
@@ -19,5 +11,39 @@ class Bottles
 
   def song
     verses(99,0)
+  end
+
+private
+
+  def next_number(number)
+    if number == 0
+      99
+    else
+      number - 1
+    end
+  end
+
+  def next_thing(number)
+    if number == 0
+      "Go to the store, get some more"
+    else
+      "Take one down, pass it around"
+    end
+  end
+
+  def bottle_number(number)
+    if number == 0
+      "no more"
+    else
+      number.to_s
+    end
+  end
+
+  def bottle_noun(number)
+    if number == 1
+      "bottle"
+    else
+      "bottles"
+    end
   end
 end
