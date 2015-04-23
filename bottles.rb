@@ -1,6 +1,7 @@
 class Bottles
   def verse(number)
-    "#{bottle_number(number).capitalize} #{bottle_noun(number)} of beer on the wall, #{bottle_number(number)} #{bottle_noun(number)} of beer. #{next_thing(number)}, #{bottle_number(next_number(number))} #{bottle_noun(next_number(number))} of beer on the wall."
+    bottle = Bottle.new(number)
+    "#{bottle.bottle_number.capitalize} #{bottle.noun} of beer on the wall, #{bottle_number(number)} #{bottle_noun(number)} of beer. #{next_thing(number)}, #{bottle_number(next_number(number))} #{bottle_noun(next_number(number))} of beer on the wall."
   end
 
   def verses(upper, lower)
@@ -14,6 +15,29 @@ class Bottles
   end
 
 private
+
+  class Bottle
+    attr_reader :number
+    def initialize(number)
+      @number = number
+    end
+
+    def bottle_number
+      if number == 0
+        "no more"
+      else
+        number.to_s
+      end
+    end
+
+    def noun
+      if number == 1
+        "bottle"
+      else
+        "bottles"
+      end
+    end
+  end
 
   def next_number(number)
     if number == 0
