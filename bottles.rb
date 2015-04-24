@@ -1,20 +1,56 @@
-class Bottles
-  def verse(number)
-    if number == 0
-      "No more bottles of beer on the wall, no more bottles of beer. Go to the store, get some more, 99 bottles of beer on the wall."
-    elsif number == 1
-      "1 bottle of beer on the wall, 1 bottle of beer. Take one down, pass it around, no more bottles of beer on the wall."
-    else
-      "#{number} bottles of beer on the wall, #{number} bottles of beer. Take one down, pass it around, #{number - 1} #{bottle_noun(number - 1)} of beer on the wall."
-    end
+# 99 bottles
+# 1 bottle
+# 0 bottles
+
+class Stash
+  attr_accessor :number
+  def initialize(number)
+    self.number = number
   end
 
-  def bottle_noun(number)
-    if number == 1
+  def bottle_noun
+    if self.number == 1
       "bottle"
     else
       "bottles"
     end
+  end
+
+  def bottle_number
+    if number == 0
+      "no more"
+    else
+      number.to_s
+    end
+  end
+
+  def next
+    if number == 0
+      Stash.new(99)
+    else
+      Stash.new(number - 1)
+    end
+  end
+
+  def next_thing
+    if number == 0
+      "Go to the store, get some more"
+    else
+      "Take one down, pass it around"
+    end
+  end
+
+end
+
+class Bottles
+  def verse(number)
+    stash = Stash.new(number)
+    next_stash = stash.next
+
+    "#{stash.bottle_number.capitalize} #{stash.bottle_noun} of beer on the wall, " +
+    "#{stash.bottle_number} #{stash.bottle_noun} of beer. " +
+    "#{stash.next_thing}, " +
+    "#{next_stash.bottle_number} #{next_stash.bottle_noun} of beer on the wall."
   end
 
   def verses(upper, lower)
@@ -26,4 +62,5 @@ class Bottles
   def song
     verses(99,0)
   end
+
 end
