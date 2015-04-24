@@ -1,6 +1,56 @@
+# 99 bottles
+# 1 bottle
+# 0 bottles
+
+class Stash
+  attr_accessor :number
+  def initialize(number)
+    self.number = number
+  end
+
+  def bottle_noun
+    if self.number == 1
+      "bottle"
+    else
+      "bottles"
+    end
+  end
+
+  def bottle_number
+    if number == 0
+      "no more"
+    else
+      number.to_s
+    end
+  end
+
+  def next
+    if number == 0
+      Stash.new(99)
+    else
+      Stash.new(number - 1)
+    end
+  end
+
+  def next_thing
+    if number == 0
+      "Go to the store, get some more"
+    else
+      "Take one down, pass it around"
+    end
+  end
+
+end
+
 class Bottles
   def verse(number)
-    "#{bottle_number(number).capitalize} #{bottle_noun(number)} of beer on the wall, #{bottle_number(number)} #{bottle_noun(number)} of beer. #{next_thing(number)}, #{bottle_number(next_number(number))} #{bottle_noun(next_number(number))} of beer on the wall."
+    stash = Stash.new(number)
+    next_stash = stash.next
+
+    "#{stash.bottle_number.capitalize} #{stash.bottle_noun} of beer on the wall, " +
+    "#{stash.bottle_number} #{stash.bottle_noun} of beer. " +
+    "#{stash.next_thing}, " +
+    "#{next_stash.bottle_number} #{next_stash.bottle_noun} of beer on the wall."
   end
 
   def verses(upper, lower)
@@ -13,37 +63,4 @@ class Bottles
     verses(99,0)
   end
 
-private
-
-  def next_number(number)
-    if number == 0
-      99
-    else
-      number - 1
-    end
-  end
-
-  def next_thing(number)
-    if number == 0
-      "Go to the store, get some more"
-    else
-      "Take one down, pass it around"
-    end
-  end
-
-  def bottle_number(number)
-    if number == 0
-      "no more"
-    else
-      number.to_s
-    end
-  end
-
-  def bottle_noun(number)
-    if number == 1
-      "bottle"
-    else
-      "bottles"
-    end
-  end
 end
